@@ -1,0 +1,1232 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #333;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+/* HEADER */
+.header {
+  background: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: #FF5A5A;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.nav {
+  display: flex;
+  gap: 56px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #1A1A1A;
+  font-weight: 400;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav a:hover {
+  color: #666;
+}
+
+.cart {
+  color: #1A1A1A;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cart:hover {
+  color: #666;
+}
+
+/* BATHROOM HERO SECTION */
+.bathroom-hero {
+  height: 100vh;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+    url("https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #1A1A1A;
+  position: relative;
+  margin-top: 88px;
+}
+
+.bathroom-content {
+  max-width: 600px;
+  text-align: left;
+  padding-left: 80px;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  margin-bottom: 40px;
+  opacity: 0.8;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.bathroom-title {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 60px 0;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+}
+
+.bathroom-elements {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.element-icon {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #E5E5E5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.element-circle {
+  width: 200px;
+  height: 200px;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  position: absolute;
+  right: -100px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* REGION SECTION */
+.region-section {
+  padding: 100px 0;
+  background: white;
+  text-align: center;
+}
+
+.region-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.region-subtitle {
+  font-size: 14px;
+  color: #666;
+  font-weight: 400;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.region-title {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #1A1A1A;
+  position: relative;
+}
+
+.highlight-circle {
+  position: relative;
+  display: inline-block;
+}
+
+.highlight-circle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border: 3px solid #FFD700;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.water-emoji, .yarn-emoji {
+  font-size: 32px;
+  vertical-align: middle;
+  margin: 0 8px;
+  position: relative;
+}
+
+.water-emoji::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 2px solid #E5E5E5;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.yarn-emoji::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 2px solid #E5E5E5;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* LAKE HERO SECTION */
+.lake-hero {
+  margin: 80px 0;
+}
+
+.lake-image {
+  height: 400px;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px 80px;
+}
+
+.lake-overlay {
+  color: white;
+}
+
+.lake-date {
+  font-size: 14px;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.lake-title {
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.lake-description {
+  padding: 60px 0;
+  text-align: left;
+  max-width: 800px;
+}
+
+.lake-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.history-btn {
+  background: transparent;
+  border: 2px solid #1A1A1A;
+  color: #1A1A1A;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.history-btn:hover {
+  background: #1A1A1A;
+  color: white;
+}
+
+/* FEATURES SECTION */
+.features-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 60px;
+  max-width: 800px;
+  cursor: pointer;
+  padding: 20px;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+.feature-item:hover {
+  background: #f8f8f8;
+}
+
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+  border: 2px solid #E5E5E5;
+  background: white;
+}
+
+.water-icon {
+  border-color: #A8C8EC;
+  background: #F0F6FF;
+}
+
+.craft-icon {
+  border-color: #B8D8A7;
+  background: #F0F8F0;
+}
+
+.standards-icon {
+  border-color: #E5E5E5;
+  background: #F8F8F8;
+}
+
+.feature-content h3 {
+  font-size: 24px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-icon {
+  font-size: 16px;
+  color: #999;
+  border: 1px solid #999;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+}
+
+.feature-content p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* PRODUCTS SECTION FIGMA - ТОЧНО ПО МАКЕТУ */
+.products-section-figma {
+  padding: 80px 0;
+  background: #F8F8F8;
+}
+
+.products-title-figma {
+  font-size: 32px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin-bottom: 40px;
+}
+
+.products-tabs-figma {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.tab-figma {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  padding: 12px 0;
+  border-bottom: 2px solid transparent;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.tab-figma.active {
+  color: #1A1A1A;
+  border-bottom-color: #1A1A1A;
+}
+
+.products-grid-figma {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 60px;
+}
+
+/* Большой блок с ванной */
+.product-large-figma {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.bathroom-large-figma {
+  background: url("https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.product-info-overlay-figma {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 280px;
+}
+
+.product-thumbnail-figma {
+  width: 50px;
+  height: 50px;
+  background: #333;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.product-details-figma h3 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 0 5px 0;
+  color: white;
+}
+
+.product-details-figma p {
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.9;
+  color: white;
+}
+
+.product-arrow-btn-figma {
+  background: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 14px;
+}
+
+/* Ряды продуктов */
+.product-row-figma {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-card-figma {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 280px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-card-figma:hover {
+  transform: translateY(-2px);
+}
+
+.green-card-figma {
+  background: linear-gradient(135deg, #A5CC94, #8FB87E);
+}
+
+.blue-card-figma {
+  background: linear-gradient(135deg, #6B9BD8, #5A8BC7);
+}
+
+.white-card-figma {
+  background: url("https://images.unsplash.com/photo-1631889993959-41b4c7c1d0a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.add-btn-figma {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 35px;
+  height: 35px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.add-btn-figma:hover {
+  transform: scale(1.1);
+  background: #1A1A1A;
+  color: white;
+}
+
+.product-info-figma {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 15px 20px;
+}
+
+.product-info-figma h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 5px 0;
+}
+
+.product-info-figma p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Специальный ряд */
+.product-special-row-figma {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.product-card-large-figma {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 350px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-card-large-figma:hover {
+  transform: translateY(-2px);
+}
+
+.product-stack-figma {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.product-card-small-figma {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 165px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-card-small-figma:hover {
+  transform: translateY(-2px);
+}
+
+.product-info-small-figma {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  padding: 10px 15px;
+}
+
+.product-info-small-figma h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin: 0 0 3px 0;
+}
+
+.product-info-small-figma p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+/* Одиночный ряд */
+.product-single-row-figma {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.product-card-single-figma {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  height: 280px;
+  width: calc(33.333% - 14px);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.product-card-single-figma:hover {
+  transform: translateY(-2px);
+}
+
+/* Пагинация */
+.pagination-figma {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  align-items: center;
+}
+
+.pagination-figma span {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #999;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  border-radius: 6px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.pagination-figma span.active {
+  color: #1A1A1A;
+  background: #E5E5E5;
+}
+
+.pagination-figma span:hover {
+  background: #F0F0F0;
+  color: #666;
+}
+
+/* WATERFALL SECTION */
+.waterfall-section {
+  margin: 80px 0;
+}
+
+.waterfall-image {
+  height: 500px;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waterfall-overlay {
+  text-align: center;
+}
+
+.waterfall-icon {
+  width: 80px;
+  height: 80px;
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.diamond-shape {
+  color: white;
+  font-size: 32px;
+}
+
+.waterfall-content {
+  padding: 60px 0;
+  text-align: left;
+  max-width: 800px;
+}
+
+.waterfall-content h2 {
+  font-size: 32px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin-bottom: 20px;
+}
+
+.waterfall-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.expandable-sections {
+  border-top: 1px solid #E5E5E5;
+}
+
+.expandable-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.expandable-item h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #1A1A1A;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+}
+
+/* DEVELOPMENT SECTION */
+.development-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.development-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.development-left h2 {
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1A1A1A;
+  margin-bottom: 20px;
+}
+
+.highlight-yellow {
+  background: #FFD700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.development-left p {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.development-right {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.news-item {
+  border-bottom: 1px solid #E5E5E5;
+  padding-bottom: 30px;
+}
+
+.news-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.news-date {
+  font-size: 12px;
+  color: #999;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.news-item h3 {
+  font-size: 18px;
+  font-weight: 400;
+  color: #1A1A1A;
+  margin-bottom: 12px;
+}
+
+.news-item p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.footer {
+  background: white;
+  padding: 60px 0;
+  border-top: 1px solid #E5E5E5;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: flex-start;
+}
+
+.footer-left h3 {
+  font-size: 20px;
+  font-weight: 400;
+  color: #1A1A1A;
+  line-height: 1.4;
+  max-width: 400px;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 80px;
+}
+
+.footer-section h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+}
+
+.footer-section p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright p,
+.footer-credit p {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}
+
+/* MODAL STYLES - ТОЧНО ПО МАКЕТАМ FIGMA */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* КОРЗИНА - ТОЧНО ПО СКРИНУ */
+.cart-modal-figma {
+  width: 350px;
+  max-width: 90vw;
+}
+
+.cart-header-figma {
+  padding: 20px 20px 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cart-header-figma h2 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.modal-close-figma {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal-close-figma:hover {
+  color: #666;
+}
+
+.cart-content-figma {
+  padding: 0;
+}
+
+.empty-cart-figma {
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+}
+
+.cart-items-figma {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.cart-item-figma {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 12px;
+  position: relative;
+}
+
+.remove-item-figma {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-item-figma:hover {
+  color: #666;
+}
+
+.cart-item-image-figma {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-left: 25px;
+  background: #f0f0f0;
+  background-image: url("https://images.unsplash.com/photo-1631889993959-41b4c7c1d0a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.cart-item-details-figma {
+  flex: 1;
+  min-width: 0;
+}
+
+.cart-item-details-figma h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.cart-item-details-figma p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+.cart-item-controls-figma {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.cart-item-controls-figma button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.cart-item-controls-figma button:hover {
+  background: #f0f0f0;
+}
+
+.cart-item-controls-figma span {
+  font-size: 14px;
+  color: #1A1A1A;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cart-total-figma {
+  padding: 15px 20px;
+  border-top: 1px solid #f0f0f0;
+  background: #f8f8f8;
+}
+
+.cart-total-figma p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0;
+}
+
+.checkout-btn-figma {
+  width: 100%;
+  padding: 12px;
+  background: #1A1A1A;
+  color: white;
+  border: none;
+  border-radius: 0 0 12px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.checkout-btn-figma:hover {
+  background: #333;
+}
+
+/* ИСТОРИЯ - ТОЧНО ПО СКРИНУ */
+.history-modal-figma {
+  width: 800px;
+  max-width: 90vw;
+  padding: 40px;
+}
+
+.history-content-figma h2 {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0 0 30px 0;
+}
+
+.history-section-figma {
+  margin-bottom: 25px;
+}
+
+.history-section-figma h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin: 0 0 8px 0;
+}
+
+.history-section-figma p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ФИЧА МОДАЛ */
+.feature-modal-figma {
+  width: 400px;
+  max-width: 90vw;
+  padding: 30px;
+}
+
+.feature-modal-content-figma h2 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1A1A1A;
+  margin: 0 0 15px 0;
+}
+
+.feature-modal-content-figma p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 40px;
+  }
+  
+  .bathroom-content {
+    padding-left: 40px;
+  }
+  
+  .bathroom-title {
+    font-size: 32px;
+  }
+  
+  .region-title {
+    font-size: 32px;
+  }
+  
+  .products-grid-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .product-row-figma,
+  .product-special-row-figma {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .product-stack-figma {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .development-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 20px;
+  }
+  
+  .bathroom-content {
+    padding-left: 20px;
+  }
+  
+  .bathroom-title {
+    font-size: 24px;
+  }
+  
+  .region-title {
+    font-size: 24px;
+  }
+  
+  .development-left h2 {
+    font-size: 32px;
+  }
+  
+  .products-title-figma {
+    font-size: 24px;
+  }
+  
+  .waterfall-content h2 {
+    font-size: 24px;
+  }
+}
