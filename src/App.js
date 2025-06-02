@@ -96,10 +96,12 @@ const Header = ({
 
           {/* Корзина справа */}
           <div className="header-right">
-            <button className="nav-button cart-button" onClick={onCartClick}>
-              <span className="cart-counter-circle">{getTotalItems()}</span>
-              Корзина
-            </button>
+            <div className="header-right desktop-only">
+              <button className="nav-button cart-button" onClick={onCartClick}>
+                <span className="cart-counter-circle">{getTotalItems()}</span>
+                Корзина
+              </button>
+            </div>
           </div>
 
           {/* Планшетная навигация */}
@@ -111,9 +113,6 @@ const Header = ({
 
           {/* Мобильная навигация */}
           <div className="mobile-nav">
-            <button className="mobile-cart" onClick={onCartClick}>
-              <span className="cart-counter-circle">{getTotalItems()}</span>
-            </button>
             <button className="menu-button" onClick={toggleMenu}>
               Меню
             </button>
@@ -148,11 +147,13 @@ const Header = ({
               Новости
             </button>
             <button
-              className="dropdown-item mobile-only"
-              onClick={() => handleMenuClick(onCartClick)}
+              className="dropdown-item mobile-cart-menu"
+              onClick={() => {
+                setIsMenuOpen(false);
+                onCartClick();
+              }}
             >
-              <span className="cart-counter-circle">{getTotalItems()}</span>
-              Корзина
+              🛒 Корзина ({getTotalItems()})
             </button>
           </div>
         </div>
@@ -555,7 +556,7 @@ const ProductsSection = ({ onAddToCart }) => {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
     const section = document.querySelector(".products-section");

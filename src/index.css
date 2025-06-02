@@ -4549,3 +4549,34 @@ body {
   cursor: pointer;
   color: #666;
 }
+.desktop-cart {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-cart {
+    display: none !important;
+  }
+}
+.mobile-cart {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  .header-right {
+    display: none !important;
+  }
+}
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+.desktop-only {
+  display: block;
+}
+.mobile-cart-menu {
+  background: #f0f8ff !important;
+  border: 2px solid #007bff !important;
+  color: #007bff !important;
+  font-weight: bold !important;
+}
