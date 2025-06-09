@@ -1,21 +1,24 @@
 {
   "files": {
-    "main.css": "/imabari-towels-store/static/css/main.cd752a74.css",
-    "main.js": "/imabari-towels-store/static/js/main.161d7f88.js",
+    "main.css": "/imabari-towels-store/static/css/main.2d307313.css",
+    "main.js": "/imabari-towels-store/static/js/main.cf6db0cf.js",
     "static/media/backgroundsix.png": "/imabari-towels-store/static/media/backgroundsix.10b4a73555613813f2bd.png",
     "static/media/backgroundthree.png": "/imabari-towels-store/static/media/backgroundthree.4f6f2fe463f1dad6a6a2.png",
     "static/media/backgroundfive.png": "/imabari-towels-store/static/media/backgroundfive.5e5510c0139121e194b8.png",
     "static/media/backgroundtwo.png": "/imabari-towels-store/static/media/backgroundtwo.d76bde25d966a6688809.png",
     "static/media/backgroundfour.png": "/imabari-towels-store/static/media/backgroundfour.493d5310dc25e4437fbe.png",
     "static/media/backgroundseven.jpeg": "/imabari-towels-store/static/media/backgroundseven.e60a092a52190353edf3.jpeg",
+    "static/media/backgroundone-4k.png": "/imabari-towels-store/static/media/backgroundone-4k.e1b7efd429eb3fad026b.png",
     "static/media/backgroundeight.jpeg": "/imabari-towels-store/static/media/backgroundeight.458fbf07027898057618.jpeg",
-    "static/media/backgroundone.png": "/imabari-towels-store/static/media/backgroundone.b6cc70a86dc446ae9848.png",
+    "static/media/backgroundone-desktop.png": "/imabari-towels-store/static/media/backgroundone-desktop.5f6587e30abf1ec9f83f.png",
     "static/media/blue.png": "/imabari-towels-store/static/media/blue.092becd17894efdc7cf7.png",
     "static/media/black.png": "/imabari-towels-store/static/media/black.b04da8c547a2d4797de2.png",
     "static/media/green.png": "/imabari-towels-store/static/media/green.10a6cfb7f717766eef6e.png",
     "static/media/blackone.png": "/imabari-towels-store/static/media/blackone.aceac4f7a18dc6cd327a.png",
     "static/media/white.png": "/imabari-towels-store/static/media/white.42deaeee79e12da9ac1e.png",
     "static/media/greentwo.png": "/imabari-towels-store/static/media/greentwo.c8fd6f9226ce560f013b.png",
+    "static/media/backgroundone-tablet.png": "/imabari-towels-store/static/media/backgroundone-tablet.6c654ceccbdd3f182f26.png",
+    "static/media/backgroundone-mobile.png": "/imabari-towels-store/static/media/backgroundone-mobile.d4b5f42c6bceea609ce1.png",
     "static/media/green_bathtwo.png": "/imabari-towels-store/static/media/green_bathtwo.d255c904e936c0c452a4.png",
     "static/media/blue_bathtwo.png": "/imabari-towels-store/static/media/blue_bathtwo.2f7fe565a77b1fc4525a.png",
     "static/media/green_bathone.png": "/imabari-towels-store/static/media/green_bathone.140f7663cad9fac6730f.png",
@@ -23,11 +26,11 @@
     "static/media/white_bathone.png": "/imabari-towels-store/static/media/white_bathone.4b3a37a646e112ea9a8b.png",
     "static/media/white_bathtwo.png": "/imabari-towels-store/static/media/white_bathtwo.f8164c524bcba247e58d.png",
     "index.html": "/imabari-towels-store/index.html",
-    "main.cd752a74.css.map": "/imabari-towels-store/static/css/main.cd752a74.css.map",
-    "main.161d7f88.js.map": "/imabari-towels-store/static/js/main.161d7f88.js.map"
+    "main.2d307313.css.map": "/imabari-towels-store/static/css/main.2d307313.css.map",
+    "main.cf6db0cf.js.map": "/imabari-towels-store/static/js/main.cf6db0cf.js.map"
   },
   "entrypoints": [
-    "static/css/main.cd752a74.css",
-    "static/js/main.161d7f88.js"
+    "static/css/main.2d307313.css",
+    "static/js/main.cf6db0cf.js"
   ]
 }
