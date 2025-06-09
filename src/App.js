@@ -1,7 +1,11 @@
 // App.js
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./index.css";
-import backgroundImage from "./backgroundone.png";
+import backgroundImage from "./backgroundone-desktop.png";
+import backgroundMobile from "./backgroundone-mobile.png";
+import backgroundTablet from "./backgroundone-tablet.png";
+import backgroundDesktop from "./backgroundone-desktop.png";
+import background4K from "./backgroundone-4k.png";
 import backgroundTwo from "./backgroundtwo.png";
 import backgroundThree from "./backgroundthree.png";
 import backgroundFour from "./backgroundfour.png";
@@ -9,8 +13,6 @@ import backgroundFive from "./backgroundfive.png";
 import backgroundSix from "./backgroundsix.png";
 import backgroundSeven from "./backgroundseven.jpeg";
 import backgroundEight from "./backgroundeight.jpeg";
-// Алиасы для изображений
-// Правильные импорты изображений полотенец
 
 import whiteImage from "./white.png";
 import whiteBathOne from "./white_bathone.png";
@@ -23,11 +25,11 @@ import greenBathTwo from "./green_bathtwo.png";
 import blueImage from "./blue.png";
 import blueBathOne from "./blue_bathone.png";
 import blueBathTwo from "./blue_bathtwo.png";
-// Для больших изображений интерьера
+
 import greenTwoImage from "./greentwo.png";
 import blackImage from "./black.png";
 import blackOneImage from "./blackone.png";
-// Функция для контекстных изображений
+
 const getContextImages = (color) => {
   const contextMap = {
     white: [whiteBathOne, whiteBathTwo],
@@ -69,15 +71,43 @@ const Header = ({
           {/* Лого и навигация слева */}
           <div className="header-left">
             <div className="header-logo">
-              <svg width="20" height="20" viewBox="0 0 20 20">
-                <circle cx="10" cy="6" r="4" fill="#ff4444" />
-                <rect x="2" y="12" width="16" height="1.5" fill="#4444ff" />
-                <rect x="2" y="15" width="16" height="1.5" fill="#4444ff" />
-                <rect x="2" y="18" width="16" height="1.5" fill="#4444ff" />
+              <svg
+                width="28"
+                height="46"
+                viewBox="0 0 28 46"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M27.9999 0H0.399902V27.6H27.9999V0ZM14.2 24.84C20.2972 24.84 25.2399 19.8972 25.2399 13.8C25.2399 7.70277 20.2972 2.76 14.2 2.76C8.10274 2.76 3.15996 7.70277 3.15996 13.8C3.15996 19.8972 8.10274 24.84 14.2 24.84Z"
+                  fill="#FF4944"
+                />
+                <rect
+                  x="0.399902"
+                  y="32.2"
+                  width="27.6"
+                  height="2.76"
+                  fill="#2E42C7"
+                />
+                <rect
+                  x="0.399902"
+                  y="37.72"
+                  width="27.6"
+                  height="2.76"
+                  fill="#2E42C7"
+                />
+                <rect
+                  x="0.399902"
+                  y="43.24"
+                  width="27.6"
+                  height="2.76"
+                  fill="#2E42C7"
+                />
               </svg>
             </div>
 
-            {/* Десктопная навигация слева */}
             <nav className="desktop-nav">
               <button className="nav-button" onClick={onHistoryClick}>
                 История
@@ -119,7 +149,7 @@ const Header = ({
           </div>
         </div>
 
-        {/* Выпадающее меню */}
+        {/* Выпадающее меню - ИСПРАВЛЕНО */}
         <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
           <div className="dropdown-content">
             <button
@@ -146,12 +176,10 @@ const Header = ({
             >
               Новости
             </button>
+            {/* Корзина для мобильных */}
             <button
               className="dropdown-item mobile-cart-menu"
-              onClick={() => {
-                setIsMenuOpen(false);
-                onCartClick();
-              }}
+              onClick={() => handleMenuClick(onCartClick)}
             >
               🛒 Корзина ({getTotalItems()})
             </button>
@@ -168,194 +196,310 @@ const Header = ({
 };
 
 const HeroSection = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [circleAnimated, setCircleAnimated] = useState(false);
+  const [currentImage, setCurrentImage] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const getBackgroundImage = () => {
+    const width = window.innerWidth;
+    if (width >= 3840) return background4K;
+    if (width >= 1920) return backgroundDesktop;
+    if (width >= 1024) return backgroundTablet;
+    return backgroundMobile;
+  };
 
   useEffect(() => {
-    setTimeout(() => setIsLoaded(true), 500);
-    setTimeout(() => setCircleAnimated(true), 2000);
+    const updateImage = () => {
+      setCurrentImage(getBackgroundImage());
+    };
+
+    updateImage();
+    window.addEventListener("resize", updateImage);
+
+    return () => window.removeEventListener("resize", updateImage);
+  }, []);
+
+  // Только анимация прогресса без переключения слайдов
+  useEffect(() => {
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          return 0;
+        }
+        return prev + 100 / (5000 / 100);
+      });
+    }, 100);
+
+    return () => clearInterval(progressInterval);
   }, []);
 
   return (
     <section className="hero">
-      <div className="hero-image-bg"></div>
+      <img src={currentImage} className="hero-bg-img" alt="" />
+
+      <div className="hero-graphic">
+        <svg
+          width="310"
+          height="325"
+          viewBox="0 0 310 325"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="hero-svg-animated"
+        >
+          <path
+            d="M155 1.25C206.094 1.25 251.367 26.172 279.327 64.5283L279.984 65.4365C298.09 90.6573 308.75 121.582 308.75 155C308.75 239.914 239.914 308.75 155 308.75C70.0862 308.75 1.25 239.914 1.25 155C1.25 122.104 11.5792 91.6244 29.1719 66.623L30.0156 65.4365C57.9201 26.5658 103.504 1.25 155 1.25Z"
+            stroke="white"
+            strokeWidth="2.5"
+            className="circle-path"
+          />
+          <line
+            y1="323.75"
+            x2="310"
+            y2="323.75"
+            stroke="white"
+            strokeWidth="2.5"
+            className="bottom-line"
+          />
+          <rect
+            x="65.25"
+            y="68.25"
+            width="179.5"
+            height="48.5"
+            stroke="white"
+            strokeWidth="2.5"
+            className="rect-1"
+          />
+          <rect
+            x="65.25"
+            y="130.25"
+            width="179.5"
+            height="48.5"
+            stroke="white"
+            strokeWidth="2.5"
+            className="rect-2"
+          />
+          <rect
+            x="65.25"
+            y="192.25"
+            width="179.5"
+            height="48.5"
+            stroke="white"
+            strokeWidth="2.5"
+            className="rect-3"
+          />
+        </svg>
+      </div>
 
       <div className="hero-overlay">
         <div className="hero-container">
           <div className="hero-content">
-            <div className={`hero-text ${isLoaded ? "animate-in" : ""}`}>
-              <p className="hero-subtitle">Инстайн — Мягкая полотенца</p>
-              <h1 className="hero-title">
-                Мягкая вода бережно относится к пряже, подчёркивая естественную
-                мягкость хлопка.
-              </h1>
-            </div>
-          </div>
-
-          <div className={`hero-graphic ${isLoaded ? "animate-in" : ""}`}>
-            <div
-              className={`graphic-circle ${
-                circleAnimated ? "animate-circle" : ""
-              }`}
-            >
-              <div className="circle-progress"></div>
-
-              <div className="graphic-lines">
-                <div className="line line-1"></div>
-                <div className="line line-2"></div>
-                <div className="line line-3"></div>
+            <div className="hero-text">
+              <p className="hero-subtitle animate-fade-up">
+                Имабари — Мягкая полотенца
+              </p>
+              <div className="hero-title">
+                <div className="animate-fade-up delay-1">
+                  Мягкая вода бережно относится к пряже,
+                </div>
+                <div className="animate-fade-up delay-2">
+                  подчёркивая естественную мягкость хлопка.
+                </div>
               </div>
             </div>
-            <div className="graphic-bottom-line"></div>
           </div>
-
-          <div className={`indicator-001 ${isLoaded ? "animate-in" : ""}`}>
-            001
-          </div>
-          <div className={`indicator-002 ${isLoaded ? "animate-in" : ""}`}>
-            002
-          </div>
-          <div className={`indicator-003 ${isLoaded ? "animate-in" : ""}`}>
-            003
-          </div>
-          <div className={`indicator-004 ${isLoaded ? "animate-in" : ""}`}>
-            004
+          <div className="hero-indicators">
+            <div className="indicator indicator-001 active">
+              001
+              <svg
+                className="progress-ring"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+              >
+                <circle
+                  cx="16"
+                  cy="16"
+                  r="14"
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="1"
+                  strokeDasharray={`${2 * Math.PI * 14}`}
+                  strokeDashoffset={`${
+                    2 * Math.PI * 14 * (1 - progress / 100)
+                  }`}
+                  transform="rotate(-90 16 16)"
+                  className="progress-circle"
+                />
+              </svg>
+            </div>
+            <div className="indicator indicator-002">002</div>
+            <div className="indicator indicator-003">003</div>
+            <div className="indicator indicator-004">004</div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        .hero-image-bg {
-          background-image: url(${backgroundImage});
-        }
-      `}</style>
     </section>
   );
 };
-
 const AboutSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const section = document.querySelector(".about-section");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section className="about-section">
       <div className="about-container">
-        <div className="about-subtitle">Имабари, Эхиме</div>
+        <div className="about-subtitle animate-fade-up">Имабари, Эхиме</div>
 
-        <div className={`about-content ${isVisible ? "animate-in" : ""}`}>
+        <div className="about-content">
           <h2 className="about-title">
-            Регион богатый природой.
-            <br />
-            Мягкая вода{" "}
-            <span className="icon-water">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M12 20c0-4 4-8 8-8s8 4 8 8"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                />
-                <path
-                  d="M14 22c0-3 3-6 6-6s6 3 6 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                />
-              </svg>
+            <span className="animate-fade-up delay-1">
+              Регион богатый природой.
             </span>
-            , качественная
             <br />
-            пряжа{" "}
-            <span className="icon-yarn">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="18"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <circle
-                  cx="20"
-                  cy="20"
-                  r="6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M20 8v24M8 20h24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
+            <span className="animate-fade-up delay-2">
+              Мягкая вода{" "}
+              <span className="icon-water animate-icon">
+                <svg
+                  width="42"
+                  height="42"
+                  viewBox="0 0 42 42"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="20.8"
+                    fill="white"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                  />
+                  <g clipPath="url(#clip0_249_3488)">
+                    <path
+                      d="M19.7822 33.5797C19.7822 33.5797 21.9994 34.4892 23.7731 32.868C23.7731 32.868 26.4336 29.7442 29.8198 32.433"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      d="M22.6372 33.5797C22.6372 33.5797 20.4201 34.4892 18.6464 32.868C18.6464 32.868 15.9858 29.7442 12.5996 32.433"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      d="M19.7822 29.2165C19.7822 29.2165 21.9994 30.1259 23.7731 28.5047C23.7731 28.5047 26.4336 25.3809 29.8198 28.0697"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      d="M22.6372 29.2165C22.6372 29.2165 20.4201 30.1259 18.6464 28.5047C18.6464 28.5047 15.9858 25.3809 12.5996 28.0697"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      d="M19.7822 24.8541C19.7822 24.8541 21.9994 25.7636 23.7731 24.1424C23.7731 24.1424 26.4336 21.0186 29.8198 23.7074"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      d="M22.6372 24.8541C22.6372 24.8541 20.4201 25.7636 18.6464 24.1424C18.6464 24.1424 15.9858 21.0186 12.5996 23.7074"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      strokeMiterlimit="10"
+                    />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M16.4905 18.639C14.8289 18.639 13.4819 17.292 13.4819 15.6305C13.4819 14.2135 14.4615 13.0253 15.7804 12.7062C16.1087 10.1139 18.3219 8.10938 21.0034 8.10938C23.1634 8.10938 25.0196 9.41015 25.8314 11.2711C27.3885 11.7312 28.5247 13.172 28.5247 14.8781C28.5247 16.9551 26.841 18.6388 24.764 18.6388H16.4905V18.639Z"
+                      stroke="#2C2C2C"
+                      strokeWidth="0.4"
+                      fill="none"
+                    />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_249_3488">
+                      <rect
+                        width="27.72"
+                        height="27.72"
+                        fill="white"
+                        transform="translate(35.2798 7.13965) rotate(90)"
+                      />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </span>
+              , качественная
             </span>
-            , и богатый опыт.
+            <br />
+            <span className="animate-fade-up delay-3">
+              пряжа{" "}
+              <span className="icon-yarn animate-icon">
+                <svg
+                  width="42"
+                  height="42"
+                  viewBox="0 0 42 42"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="20.8"
+                    fill="white"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                  />
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="16"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                    fill="none"
+                  />
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="12"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                    fill="none"
+                  />
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="8"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                    fill="none"
+                  />
+                  <circle
+                    cx="21"
+                    cy="21"
+                    r="4"
+                    stroke="#2C2C2C"
+                    strokeWidth="0.4"
+                    fill="none"
+                  />
+                  <circle cx="21" cy="21" r="2" fill="#2C2C2C" />
+                </svg>
+              </span>
+              , и богатый опыт.
+            </span>
           </h2>
         </div>
       </div>
     </section>
   );
 };
-
 const NatureSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const section = document.querySelector(".nature-section");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section className="nature-section">
       <div className="nature-image-bg"></div>
 
       <div className="nature-overlay">
         <div className="nature-container">
-          <div className={`nature-content ${isVisible ? "animate-in" : ""}`}>
+          <div className={`nature-content `}>
             <p className="nature-subtitle">Исключительное Японское качество</p>
             <h2 className="nature-title">
               Полотенца Imabari — прикосновение Японии
@@ -374,86 +518,175 @@ const NatureSection = () => {
 };
 
 const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    const section = document.querySelector(".description-section");
-    if (section) observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
   const features = [
     {
       id: "water",
       title: "Мягкая вода",
       icon: (
-        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <svg
+          width="42"
+          height="42"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <circle
-            cx="25"
-            cy="25"
-            r="24"
-            stroke="currentColor"
-            strokeWidth="1.5"
+            cx="21"
+            cy="21"
+            r="20.8"
+            fill="white"
+            stroke="#2C2C2C"
+            strokeWidth="0.4"
           />
-          <path
-            d="M15 20c0-3 2-5 5-5s5 2 5 5h5c2 0 3 1 3 3s-1 3-3 3H17c-2 0-3-1-3-3s1-3 1-3z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            fill="none"
-          />
-          <path
-            d="M12 30c2-1 4 1 6 0s4-1 6 0s4 1 6 0s4-1 6 0"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            fill="none"
-          />
-          <path
-            d="M12 34c2-1 4 1 6 0s4-1 6 0s4 1 6 0s4-1 6 0"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            fill="none"
-          />
+          <g clipPath="url(#clip0_249_3510)">
+            <g clipPath="url(#clip1_249_3510)">
+              <g clipPath="url(#clip2_249_3510)">
+                <path
+                  d="M19.7822 33.5817C19.7822 33.5817 21.9994 34.4911 23.7731 32.8699C23.7731 32.8699 26.4336 29.7461 29.8198 32.435"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M22.6372 33.5817C22.6372 33.5817 20.4201 34.4911 18.6464 32.8699C18.6464 32.8699 15.9858 29.7461 12.5996 32.435"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M19.7822 29.2184C19.7822 29.2184 21.9994 30.1279 23.7731 28.5067C23.7731 28.5067 26.4336 25.3828 29.8198 28.0717"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M22.6372 29.2184C22.6372 29.2184 20.4201 30.1279 18.6464 28.5067C18.6464 28.5067 15.9858 25.3828 12.5996 28.0717"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M19.7822 24.8571C19.7822 24.8571 21.9994 25.7665 23.7731 24.1453C23.7731 24.1453 26.4336 21.0215 29.8198 23.7104"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M22.6372 24.8571C22.6372 24.8571 20.4201 25.7665 18.6464 24.1453C18.6464 24.1453 15.9858 21.0215 12.5996 23.7104"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+
+                <path
+                  d="M16.4905 18.641C14.8289 18.641 13.4819 17.294 13.4819 15.6324C13.4819 14.2155 14.4615 13.0273 15.7804 12.7082C16.1087 10.1159 18.3219 8.11133 21.0034 8.11133C23.1634 8.11133 25.0196 9.4121 25.8314 11.2731C27.3885 11.7331 28.5247 13.1739 28.5247 14.8801C28.5247 16.9571 26.841 18.6408 24.764 18.6408C24.764 18.6408 24.764 18.6408 24.764 18.6408V18.6413H16.4905V18.641Z"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  fill="none"
+                />
+              </g>
+            </g>
+          </g>
+          <defs>
+            <clipPath id="clip0_249_3510">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(35.2798 7.14062) rotate(90)"
+              />
+            </clipPath>
+            <clipPath id="clip1_249_3510">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(35.2798 7.14062) rotate(90)"
+              />
+            </clipPath>
+            <clipPath id="clip2_249_3510">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(35.2798 7.14062) rotate(90)"
+              />
+            </clipPath>
+          </defs>
         </svg>
       ),
-      description: `Подземные воды реки Соджагава — вода которая бережно относится к пряже и материалу полотенца и позволяет получить нежные и яркие цвета, подчеркивая естественную мягкость используемого хлопка..`,
+      description: `Подземные воды реки Соджагава — вода которая бережно относится к пряже и материалу полотенца и позволяет получить нежные и яркие цвета, подчеркивая естественную мягкость используемого хлопка`,
       image: backgroundSeven,
     },
     {
       id: "experience",
       title: "Богатый опыт",
       icon: (
-        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <svg
+          width="42"
+          height="42"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <circle
-            cx="25"
-            cy="25"
-            r="24"
-            stroke="currentColor"
-            strokeWidth="1.5"
+            cx="21"
+            cy="21"
+            r="20.8"
+            fill="white"
+            stroke="#2C2C2C"
+            strokeWidth="0.4"
           />
-          <circle
-            cx="25"
-            cy="25"
-            r="18"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-          <circle
-            cx="25"
-            cy="25"
-            r="12"
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-          <circle cx="25" cy="25" r="6" stroke="currentColor" strokeWidth="1" />
-          <circle cx="25" cy="25" r="2" fill="currentColor" />
+          <g clipPath="url(#clip0_249_4701)">
+            <g clipPath="url(#clip1_249_4701)">
+              <g clipPath="url(#clip2_249_4701)">
+                <path
+                  d="M20.9876 7.68611C16.3996 7.6861 12.6802 11.4054 12.6802 15.9934C12.6802 20.5815 16.3996 24.3008 20.9876 24.3008C25.5756 24.3008 29.2949 20.5815 29.2949 15.9934C29.2949 11.4054 25.5756 7.68611 20.9876 7.68611Z"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M25.8079 16.231C21.2199 16.231 17.5006 19.9503 17.5006 24.5384C17.5006 29.1264 21.2199 32.8457 25.8079 32.8457C30.3959 32.8457 34.1152 29.1264 34.1152 24.5384C34.1152 19.9504 30.3959 16.231 25.8079 16.231Z"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+                <path
+                  d="M16.1922 16.231C11.6042 16.231 7.88484 19.9503 7.88484 24.5384C7.88484 29.1264 11.6042 32.8457 16.1922 32.8457C20.7802 32.8457 24.4995 29.1264 24.4995 24.5384C24.4995 19.9504 20.7802 16.231 16.1922 16.231Z"
+                  stroke="#2C2C2C"
+                  strokeWidth="0.4"
+                  strokeMiterlimit="10"
+                />
+              </g>
+            </g>
+          </g>
+          <defs>
+            <clipPath id="clip0_249_4701">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(7.14014 7.14062)"
+              />
+            </clipPath>
+            <clipPath id="clip1_249_4701">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(7.14014 7.14062)"
+              />
+            </clipPath>
+            <clipPath id="clip2_249_4701">
+              <rect
+                width="27.72"
+                height="27.72"
+                fill="white"
+                transform="translate(7.14014 7.14062)"
+              />
+            </clipPath>
+          </defs>
         </svg>
       ),
       description: `Различные ремесленные навыки можно увидеть в деталях каждого этапа производства полотенца, включая обработку пряжи, ткачество, состав красителя и уникальную технику Sakizarashi Sakizome`,
@@ -463,27 +696,34 @@ const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
       id: "standards",
       title: "Стандарты",
       icon: (
-        <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+        <svg
+          width="42"
+          height="42"
+          viewBox="0 0 42 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <circle
-            cx="25"
-            cy="25"
-            r="24"
-            stroke="currentColor"
-            strokeWidth="1.5"
+            cx="21"
+            cy="21"
+            r="20.8"
+            fill="white"
+            stroke="#2C2C2C"
+            strokeWidth="0.4"
           />
           <rect
-            x="15"
-            y="15"
-            width="20"
-            height="20"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            fill="none"
+            x="11.1199"
+            y="11.1199"
+            width="19.76"
+            height="19.76"
+            stroke="#2C2C2C"
+            strokeWidth="0.4"
           />
           <path
-            d="M20 20h10M20 25h10M20 30h10"
-            stroke="currentColor"
-            strokeWidth="1"
+            d="M21.0002 14.2807C17.2889 14.2807 14.2802 17.2893 14.2802 21.0007C14.2802 24.7121 17.2889 27.7207 21.0002 27.7207C24.7116 27.7207 27.7202 24.7121 27.7202 21.0007C27.7202 17.2894 24.7116 14.2807 21.0002 14.2807Z"
+            stroke="#2C2C2C"
+            strokeWidth="0.4"
+            strokeMiterlimit="10"
           />
         </svg>
       ),
@@ -495,7 +735,7 @@ const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
   return (
     <section className="description-section">
       <div className="description-container">
-        <div className={`description-content ${isVisible ? "animate-in" : ""}`}>
+        <div className="description-content">
           <p className="description-text">
             Откройте для себя полотенца Imabari, созданные в одноименном регионе
             Японии, известном своими многовековыми традициями текстильного
@@ -514,7 +754,7 @@ const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
           </div>
         </div>
 
-        <div className={`features-grid ${isVisible ? "animate-in" : ""}`}>
+        <div className="features-grid">
           {features.map((feature, index) => (
             <div
               key={feature.id}
@@ -528,9 +768,7 @@ const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
                 <span className="info-icon">ⓘ</span>
               </h3>
               <div className="feature-spacer"></div>
-              <p className="feature-description">
-                {feature.description.substring(0, 200)}...
-              </p>
+              <p className="feature-description">{feature.description}</p>
             </div>
           ))}
         </div>
@@ -540,30 +778,11 @@ const DescriptionSection = ({ onFeatureClick, onHistoryClick }) => {
 };
 
 const ProductsSection = ({ onAddToCart }) => {
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("Towel");
   const [selectedColor, setSelectedColor] = useState("white");
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const section = document.querySelector(".products-section");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
 
   const products = [
     {
@@ -574,7 +793,7 @@ const ProductsSection = ({ onAddToCart }) => {
       image: whiteImage,
       additionalImages: [whiteBathOne, whiteBathTwo],
       description:
-        "Подземные воды реки Соджагава, богатая природа региона — все это способствует качеству производства, что было замечено издавна.",
+        "Подземные воды реки Соджагава, богатая п рирода региона — все это способствует качеству производства, что было замечено издавна.",
     },
     {
       id: 2,
@@ -693,7 +912,7 @@ const ProductsSection = ({ onAddToCart }) => {
   return (
     <section className="products-section">
       <div className="products-container">
-        <div className={`products-header ${isVisible ? "animate-in" : ""}`}>
+        <div className={`products-header`}>
           <h2 className="products-title">Продукция Imabari</h2>
 
           <div className="products-tabs">
@@ -703,7 +922,7 @@ const ProductsSection = ({ onAddToCart }) => {
           </div>
         </div>
 
-        <div className={`hero-images ${isVisible ? "animate-in" : ""}`}>
+        <div className={`hero-images`}>
           <div className="hero-image-large">
             <img
               src={greenTwoImage}
@@ -731,12 +950,11 @@ const ProductsSection = ({ onAddToCart }) => {
           </div>
         </div>
 
-        <div className={`products-grid ${isVisible ? "animate-in" : ""}`}>
+        <div className={`products-grid `}>
           {products.map((product, index) => (
             <div
               key={product.id}
               className="product-card"
-              style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => handleProductClick(product)}
             >
               <div className="product-image">
@@ -765,7 +983,7 @@ const ProductsSection = ({ onAddToCart }) => {
           ))}
         </div>
 
-        <div className={`products-pagination ${isVisible ? "animate-in" : ""}`}>
+        <div className={`products-pagination `}>
           <button className="pagination-arrow" disabled>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
@@ -866,7 +1084,6 @@ const ProductsSection = ({ onAddToCart }) => {
                     </button>
                   </div>
                 </div>
-
                 <div className="color-selection">
                   <label>Цвет:</label>
                   <div className="color-options">
@@ -876,21 +1093,27 @@ const ProductsSection = ({ onAddToCart }) => {
                       }`}
                       onClick={() => setSelectedColor("white")}
                       data-color="white"
-                    ></button>
+                    >
+                      Белое
+                    </button>
                     <button
                       className={`color-btn green ${
                         selectedColor === "green" ? "active" : ""
                       }`}
                       onClick={() => setSelectedColor("green")}
                       data-color="green"
-                    ></button>
+                    >
+                      Серое
+                    </button>
                     <button
                       className={`color-btn blue ${
                         selectedColor === "blue" ? "active" : ""
                       }`}
                       onClick={() => setSelectedColor("blue")}
                       data-color="blue"
-                    ></button>
+                    >
+                      Синее
+                    </button>
                   </div>
                 </div>
 
@@ -920,8 +1143,6 @@ const ProductsSection = ({ onAddToCart }) => {
                     <span className="accordion-icon">⌄</span>
                   </button>
                 </div>
-
-                <p className="reviews-link">Читать отзывы</p>
               </div>
             </div>
           </div>
@@ -932,59 +1153,62 @@ const ProductsSection = ({ onAddToCart }) => {
 };
 
 const ManufacturingSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const section = document.querySelector(".manufacturing-section");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section className="manufacturing-section">
-      {/* Верхняя часть с изображением и геометрической фигурой */}
       <div className="manufacturing-image-container">
         <div className="manufacturing-image-bg"></div>
-
         <div className="manufacturing-overlay">
           <div className="manufacturing-container">
-            <div className={`geometric-shape ${isVisible ? "animate-in" : ""}`}>
-              <div className="shape-circle">
-                <div className="shape-diamond">
-                  <div className="shape-lines">
-                    <div className="horizontal-line"></div>
-                    <div className="vertical-line"></div>
-                  </div>
-                </div>
-              </div>
+            <div className="geometric-shape">
+              <svg
+                width="201"
+                height="210"
+                viewBox="0 0 201 210"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="100"
+                  cy="100"
+                  r="99.25"
+                  stroke="white"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="100"
+                  y="9.82043"
+                  width="127.532"
+                  height="127.532"
+                  transform="rotate(45 100 9.82043)"
+                  stroke="white"
+                  strokeWidth="1.5"
+                />
+                <line
+                  x1="1"
+                  y1="209.25"
+                  x2="201"
+                  y2="209.25"
+                  stroke="white"
+                  strokeWidth="1.5"
+                />
+              </svg>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Нижняя часть с текстовой информацией */}
       <div className="manufacturing-content">
         <div className="manufacturing-text-container">
-          <div className={`info-card ${isVisible ? "animate-in" : ""}`}>
+          <div className="info-card">
             <h3 className="info-title">
               200 производителей
               <span className="title-icon">⌃</span>
             </h3>
             <p className="info-description">
               Сейчас на производственной площадке находится почти 200 фабрик,
-              которые крутят пряжу, красят пряжу, изготавливают полотенца.
+              которые
+              <br />
+              крутят пряжу, красят пряжу, изготавливают полотенца.
             </p>
 
             <div className="accordion-section">
@@ -1016,26 +1240,6 @@ const ManufacturingSection = () => {
 };
 
 const NewsSection = ({ onNewsClick }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    const section = document.querySelector(".news-section");
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
   const newsItems = [
     {
       id: 1,
@@ -1064,14 +1268,14 @@ const NewsSection = ({ onNewsClick }) => {
     <section className="news-section">
       <div className="news-container">
         <div className="news-content">
-          <div className={`news-header ${isVisible ? "animate-in" : ""}`}>
+          <div className={`news-header`}>
             <h2 className="news-title">Следите за нашим развитием</h2>
             <p className="news-subtitle">
               Новости компании Imabari — это наша текущая история.
             </p>
           </div>
 
-          <div className={`news-list ${isVisible ? "animate-in" : ""}`}>
+          <div className={`news-list  `}>
             {newsItems.map((item, index) => (
               <div
                 key={item.id}
@@ -1262,59 +1466,31 @@ const HelpPage = ({ isOpen, onClose }) => {
   );
 };
 
-const ContactsPage = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="page-overlay" onClick={onClose}>
-      <div className="page-content" onClick={(e) => e.stopPropagation()}>
-        <button className="page-close" onClick={onClose}>
-          ✕
-        </button>
-
-        <div className="page-container">
-          <h1 className="page-title">Контакты</h1>
-
-          <div className="contacts-content">
-            <div className="contact-info">
-              <h3>Телефон</h3>
-              <p>+7 (495) 123-45-67</p>
-              <p>Режим работы: Пн-Пт 9:00-18:00</p>
-
-              <h3>Email</h3>
-              <p>info@imabari.ru</p>
-              <p>support@imabari.ru</p>
-
-              <h3>Адрес офиса</h3>
-              <p>г. Москва, ул. Примерная, д. 123</p>
-              <p>Станция метро "Примерная"</p>
-
-              <h3>Социальные сети</h3>
-              <p>Instagram: @imabari_russia</p>
-              <p>VK: vk.com/imabari_russia</p>
-            </div>
-
-            <div className="company-info">
-              <h3>ООО "Имабари Россия"</h3>
-              <p>ИНН: 1234567890</p>
-              <p>ОГРН: 1234567890123</p>
-              <p>Адрес: 123456, г. Москва, ул. Примерная, д. 123</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const NewsModal = ({ isOpen, onClose, newsItem }) => {
   if (!isOpen || !newsItem) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className={`modal-overlay ${isOpen ? "open" : ""}`} onClick={onClose}>
       <div className="news-modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
-          ✕
+        <button className="modal-close-simple" onClick={onClose}>
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.2421 13.2422L4.75687 4.75691"
+              stroke="#2C2C2C"
+              strokeLinecap="square"
+            />
+            <path
+              d="M13.2421 4.75684L4.75687 13.2421"
+              stroke="#2C2C2C"
+              strokeLinecap="square"
+            />
+          </svg>
         </button>
 
         <div className="news-modal-container">
@@ -1326,6 +1502,22 @@ const NewsModal = ({ isOpen, onClose, newsItem }) => {
 
           <div className="news-modal-image">
             <img src={backgroundFour} alt="Новость" />
+          </div>
+
+          <div className="news-modal-text">
+            <p>
+              Имабари, Эхиме — Мекка полотенец, которая продолжает производить
+              их уже более 130 лет. На этой большой производственной площадке
+              находится почти 200 фабрик, которые крутят пряжу, красят пряжу,
+              изготавливают полотенца и т. д.
+            </p>
+
+            <p>
+              Кроме того, район рядом с Внутренним морем Сето богат природой и в
+              последнее время хорошо известен как город, где мостик Симанами
+              Кайдо пересекает пролив. Все больше людей наслаждаются здесь
+              велопутешествиями.
+            </p>
           </div>
         </div>
       </div>
@@ -1376,6 +1568,44 @@ const HistoryModal = ({ isOpen, onClose }) => {
 
         <div className="history-modal-container">
           <div className="history-modal-header">
+            <div className="history-modal-icon">
+              <svg width="50" height="52" viewBox="0 0 220 231" fill="none">
+                <path
+                  d="M110 1.25C145.855 1.25 177.658 18.6007 197.47 45.3691L198.404 46.6504C211.21 64.4894 218.75 86.3625 218.75 110C218.75 170.061 170.061 218.75 110 218.75C49.939 218.75 1.25 170.061 1.25 110C1.25 86.7319 8.55652 65.174 21 47.4902L21.5957 46.6504C41.3336 19.1555 73.576 1.25 110 1.25Z"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <line
+                  y1="229.395"
+                  x2="220"
+                  y2="229.395"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <rect
+                  x="70.0889"
+                  y="160.218"
+                  width="79.8226"
+                  height="18.7903"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <rect
+                  x="70.0889"
+                  y="41.7017"
+                  width="79.8226"
+                  height="18.7903"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <path
+                  d="M110 70.7983C87.9474 70.7983 70.0889 88.5187 70.0889 110.355C70.089 132.191 87.9474 149.912 110 149.912C132.052 149.912 149.911 132.191 149.911 110.355C149.911 88.5188 132.053 70.7984 110 70.7983Z"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+              </svg>
+            </div>
+
             <span className="history-label">История</span>
             <h2 className="history-title">
               Полотенца Imabari —<br />
@@ -1389,14 +1619,13 @@ const HistoryModal = ({ isOpen, onClose }) => {
 
           <div className="history-modal-content-text">
             <p>
-              Имабари, Эхиме — Мягкая полотенца, которые производят
-              производители на уже более 100 лет. На этой большой
-              производственной площадке находится почти 200 фабрик, которые
-              крутят пряжу, красят пряжу, изготавливают полотенца и т. д. Кроме
-              того, район рядом с Внутренним морем Сэто богат природой и
-              плодородна земля хороша известна как город, где мягкая. Симанами
-              Кайдо пересекает пролив. Вся большие люди наслаждаются здесь
-              многолетним.
+              Имабари, Эхиме — Мекка полотенец, которая продолжает производить
+              их уже более 130 лет. На этой большой производственной площадке
+              находится почти 200 фабрик, которые крутят пряжу, красят пряжу,
+              изготавливают полотенца и т. д. Кроме того, район рядом с
+              Внутренним морем Сэто богат природой и в последнее время хорошо
+              известен как город, где мосты Симанами Кайдо пересекают пролив.
+              Все больше людей наслаждаются здесь велоспортом.
             </p>
 
             <div className="history-sections">
@@ -1423,9 +1652,9 @@ const HistoryModal = ({ isOpen, onClose }) => {
               <div className="history-section">
                 <h3>Настоящее время</h3>
                 <p>
-                  Подземные воды реки Соджагава, богатая природа региона — все
-                  это способствует качеству производства, что было замечено
-                  издавна.
+                  Сейчас на производственной площадке находится почти 200
+                  фабрик, которые крутят пряжу, красят пряжу, изготавливают
+                  полотенца.
                 </p>
               </div>
             </div>
@@ -1435,15 +1664,7 @@ const HistoryModal = ({ isOpen, onClose }) => {
     </div>
   );
 };
-const CartModal = ({
-  isOpen,
-  onClose,
-  cartItems,
-  onUpdateQuantity,
-  onRemoveItem,
-  onClearCart,
-  onCheckout,
-}) => {
+const CartModal = ({ isOpen, onClose, cartItems, onClearCart, onCheckout }) => {
   if (!isOpen) return null;
 
   const total = cartItems.reduce(
@@ -1461,13 +1682,13 @@ const CartModal = ({
 
         <div className="cart-modal-container">
           <div className="cart-header">
-            <h2 className="cart-title">Корзина</h2>
-            <div className="cart-header-right">
+            <div className="cart-title-section">
+              <h2 className="cart-title">Корзина</h2>
               <span className="cart-count">{totalQuantity} товара</span>
-              <button className="clear-cart" onClick={onClearCart}>
-                Очистить корзину
-              </button>
             </div>
+            <button className="clear-cart-btn" onClick={onClearCart}>
+              Очистить корзину
+            </button>
           </div>
 
           <div className="cart-items-grid">
@@ -1482,13 +1703,6 @@ const CartModal = ({
                     {item.quantity} шт
                   </div>
 
-                  <button
-                    className="cart-item-remove"
-                    onClick={() => onRemoveItem(item.id, item.size)}
-                  >
-                    ✕
-                  </button>
-
                   <div className="cart-item-image">
                     <img src={item.image} alt={item.name} />
                   </div>
@@ -1498,22 +1712,6 @@ const CartModal = ({
                     <p className="cart-item-price">
                       {item.price.toLocaleString()} ₽
                     </p>
-                  </div>
-
-                  <div className="cart-item-controls">
-                    <button
-                      className="quantity-btn"
-                      onClick={() => onUpdateQuantity(item.id, item.size, -1)}
-                    >
-                      -
-                    </button>
-                    <span className="quantity">{item.quantity}</span>
-                    <button
-                      className="quantity-btn"
-                      onClick={() => onUpdateQuantity(item.id, item.size, 1)}
-                    >
-                      +
-                    </button>
                   </div>
                 </div>
               ))
@@ -1807,7 +2005,7 @@ const PaymentErrorPage = ({ isOpen, onClose, onRetry }) => {
         <div className="payment-status-container">
           <div className="payment-status-content">
             <h1 className="payment-status-title">Ошибка оплаты</h1>
-            <p className="payment-status-subtitle">Оплачивать опять нужно не</p>
+            <p className="payment-status-subtitle">Оплачивать опять не нужно</p>
 
             <div className="payment-actions">
               <button className="payment-btn primary" onClick={onRetry}>
@@ -1902,6 +2100,50 @@ const AddToCartNotification = ({
           <button className="notification-btn primary" onClick={onGoToCart}>
             В корзину
           </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+const ContactsPage = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="page-overlay" onClick={onClose}>
+      <div className="page-content" onClick={(e) => e.stopPropagation()}>
+        <button className="page-close" onClick={onClose}>
+          ✕
+        </button>
+
+        <div className="page-container">
+          <h1 className="page-title">Контакты</h1>
+
+          <div className="contacts-content">
+            <div className="contact-info">
+              <h3>Телефон</h3>
+              <p>+7 (495) 123-45-67</p>
+              <p>Режим работы: Пн-Пт 9:00-18:00</p>
+
+              <h3>Email</h3>
+              <p>info@imabari.ru</p>
+              <p>support@imabari.ru</p>
+
+              <h3>Адрес офиса</h3>
+              <p>г. Москва, ул. Примерная, д. 123</p>
+              <p>Станция метро "Примерная"</p>
+
+              <h3>Социальные сети</h3>
+              <p>Instagram: @imabari_russia</p>
+              <p>VK: vk.com/imabari_russia</p>
+            </div>
+
+            <div className="company-info">
+              <h3>ООО "Имабари Россия"</h3>
+              <p>ИНН: 1234567890</p>
+              <p>ОГРН: 1234567890123</p>
+              <p>Адрес: 123456, г. Москва, ул. Примерная, д. 123</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
