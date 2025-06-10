@@ -49,6 +49,7 @@ const Header = ({
   scrollToNews,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -64,134 +65,143 @@ const Header = ({
     return cartItems.reduce((total, item) => total + (item.quantity || 0), 0);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <>
-      <header className="header">
-        <div className="header-container">
-          {/* Лого и навигация слева */}
-          <div className="header-left">
-            <div className="header-logo">
-              <svg
-                width="28"
-                height="46"
-                viewBox="0 0 28 46"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M27.9999 0H0.399902V27.6H27.9999V0ZM14.2 24.84C20.2972 24.84 25.2399 19.8972 25.2399 13.8C25.2399 7.70277 20.2972 2.76 14.2 2.76C8.10274 2.76 3.15996 7.70277 3.15996 13.8C3.15996 19.8972 8.10274 24.84 14.2 24.84Z"
-                  fill="#FF4944"
-                />
-                <rect
-                  x="0.399902"
-                  y="32.2"
-                  width="27.6"
-                  height="2.76"
-                  fill="#2E42C7"
-                />
-                <rect
-                  x="0.399902"
-                  y="37.72"
-                  width="27.6"
-                  height="2.76"
-                  fill="#2E42C7"
-                />
-                <rect
-                  x="0.399902"
-                  y="43.24"
-                  width="27.6"
-                  height="2.76"
-                  fill="#2E42C7"
-                />
-              </svg>
-            </div>
-
-            <nav className="desktop-nav">
-              <button className="nav-button" onClick={onHistoryClick}>
-                История
-              </button>
-              <button className="nav-button" onClick={scrollToProducts}>
-                Каталог
-              </button>
-              <button className="nav-button" onClick={onHelpClick}>
-                FAQ
-              </button>
-              <button className="nav-button" onClick={scrollToNews}>
-                Новости
-              </button>
-            </nav>
-          </div>
-
-          {/* Корзина справа */}
-          <div className="header-right">
-            <div className="header-right desktop-only">
-              <button className="nav-button cart-button" onClick={onCartClick}>
-                <span className="cart-counter-circle">{getTotalItems()}</span>
-                Корзина
-              </button>
-            </div>
-          </div>
-
-          {/* Планшетная навигация */}
-          <div className="tablet-nav">
-            <button className="menu-button" onClick={toggleMenu}>
-              Меню
-            </button>
-          </div>
-
-          {/* Мобильная навигация */}
-          <div className="mobile-nav">
-            <button className="menu-button" onClick={toggleMenu}>
-              Меню
-            </button>
-          </div>
-        </div>
-
-        {/* Выпадающее меню - ИСПРАВЛЕНО */}
-        <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
-          <div className="dropdown-content">
-            <button
-              className="dropdown-item"
-              onClick={() => handleMenuClick(onHistoryClick)}
+    <header className="header" ref={menuRef}>
+      <div className="header-container">
+        <div className="header-left">
+          <div className="header-logo">
+            <svg
+              width="28"
+              height="46"
+              viewBox="0 0 28 46"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M27.9999 0H0.399902V27.6H27.9999V0ZM14.2 24.84C20.2972 24.84 25.2399 19.8972 25.2399 13.8C25.2399 7.70277 20.2972 2.76 14.2 2.76C8.10274 2.76 3.15996 7.70277 3.15996 13.8C3.15996 19.8972 8.10274 24.84 14.2 24.84Z"
+                fill="#FF4944"
+              />
+              <rect
+                x="0.399902"
+                y="32.2"
+                width="27.6"
+                height="2.76"
+                fill="#2E42C7"
+              />
+              <rect
+                x="0.399902"
+                y="37.72"
+                width="27.6"
+                height="2.76"
+                fill="#2E42C7"
+              />
+              <rect
+                x="0.399902"
+                y="43.24"
+                width="27.6"
+                height="2.76"
+                fill="#2E42C7"
+              />
+            </svg>
+          </div>
+
+          <nav className="desktop-nav">
+            <button className="nav-button" onClick={onHistoryClick}>
               История
             </button>
-            <button
-              className="dropdown-item"
-              onClick={() => handleMenuClick(scrollToProducts)}
-            >
+            <button className="nav-button" onClick={scrollToProducts}>
               Каталог
             </button>
-            <button
-              className="dropdown-item"
-              onClick={() => handleMenuClick(onHelpClick)}
-            >
+            <button className="nav-button" onClick={onHelpClick}>
               FAQ
             </button>
-            <button
-              className="dropdown-item"
-              onClick={() => handleMenuClick(scrollToNews)}
-            >
+            <button className="nav-button" onClick={scrollToNews}>
               Новости
             </button>
-            {/* Корзина для мобильных */}
-            <button
-              className="dropdown-item mobile-cart-menu"
-              onClick={() => handleMenuClick(onCartClick)}
-            >
-              🛒 Корзина ({getTotalItems()})
+          </nav>
+        </div>
+
+        <div className="header-right">
+          <div className="desktop-only">
+            <button className="nav-button cart-button" onClick={onCartClick}>
+              <span className="cart-counter-circle">{getTotalItems()}</span>
+              Корзина
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Оверлей для закрытия меню */}
-      {isMenuOpen && (
-        <div className="menu-overlay" onClick={() => setIsMenuOpen(false)} />
-      )}
-    </>
+        <div className="tablet-nav">
+          <button className="menu-button" onClick={toggleMenu}>
+            Меню
+          </button>
+        </div>
+
+        <div className="mobile-nav">
+          <button className="menu-button" onClick={toggleMenu}>
+            Меню
+          </button>
+        </div>
+      </div>
+
+      <div className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
+        <div className="dropdown-header">
+          <button
+            className="dropdown-close"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="dropdown-content">
+          <button
+            className="dropdown-item"
+            onClick={() => handleMenuClick(onHistoryClick)}
+          >
+            История
+          </button>
+          <button
+            className="dropdown-item"
+            onClick={() => handleMenuClick(scrollToProducts)}
+          >
+            Каталог
+          </button>
+          <button
+            className="dropdown-item"
+            onClick={() => handleMenuClick(onHelpClick)}
+          >
+            FAQ
+          </button>
+          <button
+            className="dropdown-item"
+            onClick={() => handleMenuClick(scrollToNews)}
+          >
+            Новости
+          </button>
+
+          {/* Корзина внизу меню */}
+          <button
+            className="dropdown-item mobile-cart-menu"
+            onClick={() => handleMenuClick(onCartClick)}
+          >
+            <span className="cart-counter-circle">{getTotalItems()}</span>
+            Корзина
+          </button>
+        </div>
+      </div>
+    </header>
   );
 };
 
