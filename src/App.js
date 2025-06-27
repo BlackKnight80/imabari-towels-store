@@ -304,7 +304,7 @@ const HeroSection = () => {
           <div className="hero-content">
             <div className="hero-text">
               <p className="hero-subtitle animate-fade-up">
-                Имабари — Мягкая полотенца
+                Имабари — Мягкие полотенца
               </p>
               <div className="hero-title">
                 <div className="animate-fade-up delay-1">
